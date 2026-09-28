@@ -1,0 +1,23 @@
+/target/
+/artifacts/
+/reference/
+/logs/
+/LocalLow/
+*.log
+*.zip
+.env
+.env.*
+!.env.example
+**/node_modules/
+**/.dev.vars
+**/.wrangler/
+**/.wrangler-*/
+**/.wrangler*/
+**/coverage/
+**/__pycache__/
+*.pyc
+third_party/**/.git/
+ChatGPT Image*.png
+**/data/session.json
+**/data/session.dat
+**/run/

@@ -1,0 +1,9 @@
+[package]
+name = "trimui-ui-kit"
+version = "0.1.0"
+edition = "2024"
+description = "Reusable egui controls for TrimUI handheld applications"
+license = "MIT"
+
+[dependencies]
+egui = "0.36.2"

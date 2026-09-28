@@ -1,0 +1,9 @@
+{
+    "package":  "local.soundcloud.brickwave.trimui",
+    "label":  "Brickwave",
+    "icontop":  "brickwave.png",
+    "icon":  "",
+    "launch":  "launch.sh",
+    "description":  "SoundCloud client for TrimUI Brick Pro StockOS",
+    "build":  "brickwave-stockos-00.4.29"
+}

@@ -1,0 +1,33 @@
+[package]
+name = "brickwave"
+version = "0.4.29"
+edition = "2024"
+description = "SoundCloud client UI for Windows and TrimUI Brick"
+license = "MIT"
+
+[dependencies]
+base64 = "0.22.1"
+egui = "0.36.2"
+egui-phosphor = { version = "0.14.0", default-features = false, features = ["subset"] }
+hex = "0.4.3"
+image = { version = "0.25.9", default-features = false, features = ["jpeg", "png", "webp"] }
+serde = { version = "1.0.228", features = ["derive"] }
+serde_json = "1.0.149"
+sha2 = "0.10.9"
+qrcodegen = "1.8.0"
+ureq = { version = "2.12.1", default-features = false, features = ["tls"] }
+url = "2.5.7"
+trimui-ui-kit = { path = "crates/trimui-ui-kit" }
+
+[target.'cfg(not(all(target_os = "linux", target_arch = "aarch64")))'.dependencies]
+eframe = "0.36.2"
+
+[target.'cfg(all(target_os = "linux", target_arch = "aarch64"))'.dependencies]
+# StockOS has a validated SDL2/Mali path. The handheld build skips winit/X11
+# and feeds the same egui UI through the small SDL2 renderer used by Sbricktify.
+egui-sdl2 = { path = "third_party/egui-sdl2", default-features = false, features = ["canvas-backend", "glow-backend", "sdl2-use-pkgconfig"], optional = true }
+libc = { version = "0.2", optional = true }
+
+[features]
+default = []
+trimui-sdl2 = ["dep:egui-sdl2", "dep:libc"]

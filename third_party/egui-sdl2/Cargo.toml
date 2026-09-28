@@ -1,0 +1,86 @@
+[package]
+name = "egui-sdl2"
+version = "0.12.0"
+edition = "2021"
+rust-version = "1.95"
+description = "egui integration for SDL2: event handling and software, OpenGL, or wgpu rendering"
+readme = "README.md"
+license = "MIT OR Apache-2.0"
+repository = "https://github.com/mxmgorin/egui-sdl2"
+homepage = "https://github.com/mxmgorin/egui-sdl2"
+documentation = "https://docs.rs/egui-sdl2"
+keywords = ["sdl2", "egui", "gui", "gamedev", "opengl"]
+categories = ["gui", "rendering", "game-development"]
+include = ["LICENSE-APACHE", "LICENSE-MIT", "README.md", "CHANGELOG.md", "**/*.rs", "Cargo.toml"]
+
+[features]
+# `wgpu-backend` is opt-in: it pulls in wgpu + naga (~90 extra crates). The
+# default keeps the two lightweight backends the docs/examples exercise; enable
+# `wgpu-backend` explicitly if you need the WebGPU renderer.
+default = ["links", "glow-backend", "canvas-backend"]
+# Enable rendering via glow
+glow-backend = ["glow", "egui_glow"]
+# Enable rendering via canvas
+canvas-backend = ["sdl2-sys", "bytemuck", "egui/bytemuck", "sdl2/unsafe_textures"]
+# Enable rendering via canvas
+wgpu-backend = ["egui-wgpu", "egui-wgpu/capture", "web-time", "sdl2/raw-window-handle", "pollster"]
+# Enable opening links in a browser when an egui hyperlink is clicked.
+links = ["webbrowser"]
+# Forward sdl2 features
+sdl2-gfx = ["sdl2/gfx"]
+sdl2-image = ["sdl2/image"]
+sdl2-mixer = ["sdl2/mixer"]
+sdl2-ttf = ["sdl2/ttf"]
+sdl2-raw-window-handle = ["sdl2/raw-window-handle"]
+sdl2-unsafe_textures = ["sdl2/unsafe_textures"]
+sdl2-use-bindgen = ["sdl2/use-bindgen"]
+sdl2-use-vcpkg = ["sdl2/use-vcpkg"]
+sdl2-use-pkgconfig = ["sdl2/use-pkgconfig"]
+sdl2-static-link = ["sdl2/static-link"]
+sdl2-use_mac_framework = ["sdl2/use_mac_framework"]
+sdl2-use_ios_framework = ["sdl2/use_ios_framework"]
+sdl2-bundled = ["sdl2/bundled"]
+
+[dependencies]
+log = "0.4.33"
+sdl2 = { version = "0.38.0", default-features = false }
+egui = "0.36.1"
+webbrowser = { version = "1.2.1", optional = true }
+# glow-backend:
+glow = { version = "0.17.0", optional = true }
+egui_glow = { version = "0.36.1", optional = true }
+# canvas-backend:
+sdl2-sys = {version = "0.38", optional = true }
+bytemuck = { version = "1.25.2", optional = true }
+# wgpu-backend:
+egui-wgpu = { version = "0.36.1", optional = true }
+web-time = { version = "1.1.0", optional = true }
+# EguiWindow blocks on wgpu's async setup at startup.
+pollster = { version = "1.0.1", optional = true }
+
+[dev-dependencies]
+pollster = { version = "1.0.1" }
+
+# Each example needs its backend feature. Without these, `cargo build
+# --examples` fails on the wgpu example now that it isn't in the default set;
+# the guards let it be skipped (or built with `--features wgpu-backend`).
+[[example]]
+name = "canvas"
+required-features = ["canvas-backend"]
+
+[[example]]
+name = "glow"
+required-features = ["glow-backend"]
+
+[[example]]
+name = "wgpu"
+required-features = ["wgpu-backend"]
+
+[[example]]
+name = "window"
+required-features = ["glow-backend", "canvas-backend"]
+
+# Build docs on docs.rs with every rendering backend enabled; otherwise the
+# wgpu module (not in the default feature set) would be missing from the docs.
+[package.metadata.docs.rs]
+features = ["glow-backend", "canvas-backend", "wgpu-backend"]

@@ -1,0 +1,39 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "brickwave-api",
+  "main": "src/worker.ts",
+  "compatibility_date": "2026-09-22",
+  "preview_urls": false,
+  "observability": {
+    "enabled": true,
+    "logs": {
+      "enabled": true
+    }
+  },
+  "durable_objects": {
+    "bindings": [
+      {
+        "name": "TOKEN_COORDINATOR",
+        "class_name": "TokenCoordinator"
+      },
+      {
+        "name": "REQUEST_GUARD",
+        "class_name": "RequestGuard"
+      },
+      {
+        "name": "AUTH_SESSION_STORE",
+        "class_name": "AuthSessionStore"
+      }
+    ]
+  },
+  "migrations": [
+    {
+      "tag": "v1",
+      "new_sqlite_classes": ["TokenCoordinator", "RequestGuard"]
+    },
+    {
+      "tag": "v2-user-auth-sessions",
+      "new_sqlite_classes": ["AuthSessionStore"]
+    }
+  ]
+}

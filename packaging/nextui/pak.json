@@ -1,0 +1,12 @@
+{
+  "name": "Brickwave",
+  "version": "v0.2.0",
+  "type": "TOOL",
+  "description": "SoundCloud client for TrimUI Brick Pro running NextUI",
+  "author": "NguyenPhuongDuy24",
+  "repo_url": "https://github.com/NguyenPhuongDuy24/brickwave",
+  "release_filename": "Brickwave-NextUI-00.2.0.zip",
+  "platforms": [
+    "tg5040"
+  ]
+}
